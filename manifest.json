@@ -3,7 +3,7 @@
   "name": "Briefly",
   "version": "1.0",
   "description": "Summarize and highlight website content directly from Google Search.",
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab","scripting"],
   "host_permissions": ["*://*/*"],
   "background": {
     "service_worker": "background.js"
