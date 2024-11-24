@@ -1,0 +1,62 @@
+.briefly-popup {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.8));
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(200, 200, 200, 0.5);
+    border-radius: 12px;
+    padding: 15px;
+    max-width: 320px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.briefly-popup img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.briefly-popup .typewriter {
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    animation: typewriter 3s steps(40, end);
+    border-right: 2px solid #0073e6;
+    width: 100%;
+}
+.briefly-popup .typewriter-complete {
+    animation: none;
+    border: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typewriter {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+@keyframes blink {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: white;
+    }
+}
