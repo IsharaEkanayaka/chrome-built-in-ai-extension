@@ -49,7 +49,7 @@ const PopupManager = {
   fetchInProgress: false,
   hoverTimeout: null,
 
-  async getSummarizer(content, event) {
+  async getSummarizer(content, enableReturn = false) {
     const canSummarize = await ai.summarizer.capabilities();
     let summarizer;
 
@@ -61,7 +61,8 @@ const PopupManager = {
         console.log("Summarized Content:", summarizedContent);
 
         // Update popup with summarized content
-        this.updatePopupContent(summarizedContent);
+        if (!enableReturn) this.updatePopupContent(summarizedContent);
+        else return summarizedContent;
         summarizer.destroy();
       } else {
         summarizer = await ai.summarizer.create();
@@ -71,7 +72,8 @@ const PopupManager = {
         await summarizer.ready;
       }
     } else {
-      this.updatePopupContent('Summarizer unavailable.');
+      if (!enableReturn) this.updatePopupContent('Summarizer unavailable.');
+      else return `Summarizer unavailable.`
     }
   },
 
@@ -276,7 +278,8 @@ function detectLinks() {
 
 
 (() => {
-  const processedLinks = new WeakMap();
+  
+  const processedLinks = new Map();
   let lastFetchedUrl = null;
   let fetchTimeoutId = null;
 
@@ -370,7 +373,7 @@ function detectLinks() {
   
       // Fetch summary and update the popup
       const toSummarizeText = `This website titled ${extractedData.webtitle}. And website contains these sections ${extractedData.headers} Here are its contains: ${extractedData.paragraphs[50]}.`
-      PopupManager.getSummarizer(toSummarizeText, event);
+      PopupManager.getSummarizer(toSummarizeText);
     } catch (error) {
       PopupManager.showPopup(`Error loading content: ${error.message}`, event);
     } finally {
@@ -461,11 +464,12 @@ function detectLinks() {
     observer.disconnect();
     PopupManager.removePopup();
     
-    for (const link of processedLinks.keys()) {
-      const cleanup = processedLinks.get(link);
+    // For a regular object
+    for (const link of Object.keys(processedLinks)) {
+      const cleanup = processedLinks[link];
       if (cleanup) cleanup();
     }
-  }
+}
   
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
