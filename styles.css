@@ -1,5 +1,6 @@
 /* styles.css */
 .custom-message-btn {
+    display: none;
     margin-left: 8px;
     padding: 4px 8px;
     border-radius: 4px;
@@ -8,6 +9,11 @@
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.message-in:hover .custom-message-btn,
+.message-out:hover .custom-message-btn {
+    display: block;
 }
 
 .custom-message-btn:hover {
