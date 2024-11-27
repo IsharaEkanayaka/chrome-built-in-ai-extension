@@ -181,3 +181,34 @@
     // Initial link detection
     detectLinks();
   })();
+
+
+  //Brief Whatsapp messages
+  function addButtonsToMessages() {
+    const messages = document.querySelectorAll('div.message-in, div.message-out');
+    messages.forEach(message => {
+        const amjDiv = message.querySelector('div._amj_');
+        if (!amjDiv || amjDiv.querySelector('.custom-message-btn')) return;
+
+        const button = document.createElement('button');
+        button.textContent = '🤖';
+        button.className = 'custom-message-btn';
+        button.title = 'AI Actions';
+        button.onclick = () => {
+            console.log('AI button clicked for message:', message.textContent);
+        };
+        
+        amjDiv.appendChild(button);
+    });
+}
+
+addButtonsToMessages();
+
+const observer = new MutationObserver(() => {
+    addButtonsToMessages();
+});
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});

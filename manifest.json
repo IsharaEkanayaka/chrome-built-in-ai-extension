@@ -1,10 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Plain Text Content Fetcher",
+  "name": "Briefly",
   "version": "1.0",
-  "description": "Fetches plain text content of hovered links when Shift is pressed",
+  "description": "Fetches plain text content of hovered links when Shift is pressed.Brief whatsapp messages",
   "permissions": [
-    "scripting"
+    "scripting","activeTab"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -15,7 +15,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["styles.css"]
     }
   ]
 }
