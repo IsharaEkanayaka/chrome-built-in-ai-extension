@@ -10,8 +10,12 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.google.com/search*"],
-      "js": ["content.js"],
+      "matches": [
+        "https://www.google.com/search*",
+         "*://web.telegram.org/*",
+        "*://web.whatsapp.com/*"
+    ],
+      "js": ["content.js", "reply-suggestion-module.js"],
       "css": ["styles.css"]
     }
   ],

@@ -41,8 +41,6 @@ function markdownToHtml(markdown) {
   return html;
 }
 
-
-
 // Popup management functions
 const PopupManager = {
   activePopup: null,
@@ -50,32 +48,59 @@ const PopupManager = {
   hoverTimeout: null,
 
   async getSummarizer(content, enableReturn = false) {
-    const canSummarize = await ai.summarizer.capabilities();
-    let summarizer;
+    try {
+        const canSummarize = await ai.summarizer.capabilities();
+        let summarizer;
 
-    if (canSummarize && canSummarize.available !== 'no') {
-      if (canSummarize.available === 'readily') {
-        summarizer = await ai.summarizer.create();
-        console.log(content);
-        const summarizedContent = await summarizer.summarize(content, { length: "short" });
-        console.log("Summarized Content:", summarizedContent);
+        if (canSummarize && canSummarize.available !== 'no') {
+            if (canSummarize.available === 'readily') {
+                summarizer = await ai.summarizer.create();
+                console.log(content);
 
-        // Update popup with summarized content
-        if (!enableReturn) this.updatePopupContent(summarizedContent);
-        else return summarizedContent;
-        summarizer.destroy();
-      } else {
-        summarizer = await ai.summarizer.create();
-        summarizer.addEventListener('downloadprogress', (e) => {
-          console.log(e.loaded, e.total);
-        });
-        await summarizer.ready;
-      }
-    } else {
-      if (!enableReturn) this.updatePopupContent('Summarizer unavailable.');
-      else return `Summarizer unavailable.`
+                try {
+                    const summarizedContent = await summarizer.summarize(content, { length: "short" });
+                    console.log("Summarized Content:", summarizedContent);
+
+                    // Update popup with summarized content
+                    if (!enableReturn) {
+                        this.updatePopupContent(summarizedContent);
+                    } else {
+                        return summarizedContent;
+                    }
+                } catch (summarizeError) {
+                    console.error("Error during summarization:", summarizeError);
+                    if (!enableReturn) {
+                        this.updatePopupContent('Error summarizing content.');
+                    } else {
+                        return 'Error summarizing content.';
+                    }
+                } finally {
+                    summarizer.destroy();
+                }
+            } else {
+                summarizer = await ai.summarizer.create();
+                summarizer.addEventListener('downloadprogress', (e) => {
+                    console.log(e.loaded, e.total);
+                });
+                await summarizer.ready;
+            }
+        } else {
+            if (!enableReturn) {
+                this.updatePopupContent('Summarizer unavailable.');
+            } else {
+                return 'Summarizer unavailable.';
+            }
+        }
+    } catch (error) {
+        console.error("Error in getSummarizer function:", error);
+        if (!enableReturn) {
+            this.updatePopupContent('An error occurred while attempting to summarize. Please make sure you have Gemini nano ready');
+        } else {
+            return 'An error occurred while attempting to summarize.Please make sure you have Gemini nano ready';
+        }
     }
-  },
+},
+
 
   showPopup(initialContent, event, title = null, summaryText = "Waiting for summary...") {
     this.removePopup();
