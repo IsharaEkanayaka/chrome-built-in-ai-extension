@@ -1,12 +1,13 @@
 // Reply Suggestion Module
 const ReplySuggestionModule = (() => {
+    let activePopup = null;
     // Inject advanced AI-inspired styles
     function injectStyles() {
       const style = document.createElement('style');
       style.textContent = `
-        .reply-suggestion-container {
-  position: relative;
-}
+  .reply-suggestion-container {
+      position: relative;
+    }
 
 .reply-suggestion-icon {
   position: absolute;
@@ -120,7 +121,7 @@ const ReplySuggestionModule = (() => {
         inputSelector: '.composer-rich-textarea',
       },
       whatsapp: {
-        messageSelector: '[data-testid="conversation-msg-container"]',
+        messageSelector: 'div.message-in, div.message-out',
         inputSelector: '[data-testid="compose-input-container"] div[contenteditable="true"]',
       }
     };
@@ -149,6 +150,9 @@ const ReplySuggestionModule = (() => {
   
     // Create suggestion popup
     function createSuggestionPopup(suggestions) {
+      if (activePopup) {
+        activePopup.remove();
+    }
       const popup = document.createElement('div');
       popup.classList.add('reply-suggestion-popup');
   
@@ -173,6 +177,21 @@ const ReplySuggestionModule = (() => {
         
         inner.appendChild(suggestionEl);
       });
+
+      activePopup = popup;
+      // Handle outside clicks
+      const handleOutsideClick = (e) => {
+          if (!popup.contains(e.target)) {
+              popup.remove();
+              activePopup = null;
+              document.removeEventListener('click', handleOutsideClick);
+          }
+      };
+
+      // Delay to avoid immediate trigger
+      setTimeout(() => {
+          document.addEventListener('click', handleOutsideClick);
+      }, 0);
   
       return popup;
     }
