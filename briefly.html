@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Briefly - AI Web Summarizer</title>
+    <style>
+      :root {
+        --bg-primary: #0a1128;
+        --bg-secondary: #001f3f;
+        --accent-color: #00b4fc;
+        --text-primary: #e6e6e6;
+        --text-secondary: #a0a0a0;
+        --button-bg: rgba(0, 180, 252, 0.7);
+        --button-hover-bg: rgba(0, 180, 252, 1);
+        --gradient-1: linear-gradient(135deg, #001f3f, #0a1128);
+        --gradient-2: linear-gradient(
+          135deg,
+          rgba(0, 180, 252, 0.8),
+          rgba(0, 180, 252, 0.3)
+        );
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        background: var(--gradient-1);
+        color: var(--text-primary);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        animation: fadeIn 2s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .container {
+        max-width: 1000px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+        text-align: center;
+        transform: scale(0.9);
+        animation: scaleUp 1s ease-out forwards;
+        display: flex;
+        align-items: center;
+        justify-items: center;
+        flex-direction: column;
+      }
+
+      @keyframes scaleUp {
+        from {
+          transform: scale(0.9);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      h1 {
+        font-size: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: var(--accent-color);
+        margin-bottom: 24px;
+        text-shadow: 0 0 15px rgba(0, 180, 252, 0.5);
+        animation: glow 1.5s infinite alternate;
+      }
+
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 15px rgba(0, 180, 252, 0.5);
+        }
+        100% {
+          text-shadow: 0 0 30px rgba(0, 180, 252, 1);
+        }
+      }
+
+      h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        animation: slideIn 1.5s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      p {
+        font-size: 16px;
+        color: var(--text-secondary);
+        margin-bottom: 20px;
+        animation: fadeInText 2s ease-out;
+      }
+
+      @keyframes fadeInText {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .features {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        animation: fadeInText 2s ease-out;
+      }
+
+      .feature {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        width: 30%;
+        text-align: center;
+        opacity: 0;
+        animation: featureFadeIn 2s ease-out forwards;
+      }
+
+      @keyframes featureFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .feature h3 {
+        color: var(--accent-color);
+        margin-bottom: 10px;
+      }
+
+      .button {
+        background-color: var(--button-bg);
+        color: var(--bg-primary);
+        padding: 15px 30px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+        display: inline-block;
+        margin-top: 30px;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .button:hover {
+        background-color: var(--button-hover-bg);
+      }
+
+      footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      footer a {
+        color: var(--accent-color);
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Coming Soon Section */
+      .coming-soon {
+        background: var(--gradient-2);
+        padding: 20px;
+        border-radius: 12px;
+        margin-top: 50px;
+        animation: fadeInText 2s ease-out;
+        max-width: 500px;
+      }
+
+      .coming-soon h3 {
+        font-size: 24px;
+        color: var(--accent-color);
+        margin-bottom: 15px;
+      }
+
+      .coming-soon ul {
+        list-style-type: none;
+        font-size: 16px;
+        color: var(--text-secondary);
+      }
+
+      .coming-soon ul li {
+        padding: 10px;
+        border-bottom: 1px solid var(--bg-primary);
+      }
+
+      .coming-soon ul li:hover {
+        background: rgba(0, 180, 252, 0.2);
+      }
+
+      @media (max-width: 768px) {
+        .features {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .feature {
+          width: 80%;
+          margin-bottom: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>
+        <div class="ai-icon">
+          <img src="brieflyIcon48.png" alt="Briefly AI Logo" />
+        </div>
+        Briefly
+      </h1>
+      <h2>Your AI-powered Web Summarizer and Messenger Assistant</h2>
+      <p>
+        Briefly makes your life easier. Get quick summaries of web pages and
+        receive smart reply suggestions for WhatsApp and Telegram—all with the
+        power of AI.
+      </p>
+
+      <!-- Features Section -->
+      <div class="features">
+        <div class="feature">
+          <h3>Instant Web Summarization</h3>
+          <p>
+            Summarize any website content in an instant. Save time and get to
+            the point quickly.
+          </p>
+        </div>
+        <div class="feature">
+          <h3>Smart Reply Suggestions</h3>
+          <p>
+            Get AI-powered suggestions for your WhatsApp and Telegram messages,
+            all with a simple hover.
+          </p>
+        </div>
+        <div class="feature">
+          <h3>Boost Your Productivity</h3>
+          <p>
+            Spend less time reading and responding. Briefly helps you focus on
+            what matters.
+          </p>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <a
+        href="https://chromewebstore.google.com/category/extensions?utm_source=ext_sidebar&hl=en-US"
+        class="button"
+        >Learn More</a
+      >
+
+      <!-- Coming Soon Section -->
+      <div class="coming-soon">
+        <h3>Coming Soon: More AI-powered Features!</h3>
+        <ul>
+          <li>Website Cheat Sheet Generator</li>
+          <li>AI-Supported Email Writer</li>
+          <li>Automated Social Media Management</li>
+          <li>Personalized News & Article Summarization</li>
+          <li>Smart Search Assistant</li>
+        </ul>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <p>&copy; 2024 Briefly. All rights reserved. <br /></p>
+      </footer>
+    </div>
+  </body>
+</html>

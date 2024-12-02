@@ -56,8 +56,7 @@
         filter: drop-shadow(0 0 5px var(--accent-color));
       }
 
-      #summarizeButton,
-      #downloadButton {
+      #learnMoreButton {
         background: var(--accent-color);
         color: var(--bg-primary);
         border: none;
@@ -71,35 +70,30 @@
         font-weight: bold;
         transition: all 0.3s ease;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-decoration: none;
       }
 
-      #summarizeButton:hover,
-      #downloadButton:hover {
+      #downloadButton:hover,
+      #learnMoreButton:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
       }
 
       .button-icon {
         font-size: 18px;
+        text-decoration: none;
       }
 
-      #summary {
+      #description {
         width: 100%;
-        min-height: 200px;
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 8px;
         color: var(--text-primary);
         padding: 10px;
-        resize: vertical;
         font-size: 14px;
         line-height: 1.6;
-        transition: all 0.3s ease;
-      }
-
-      #summary:focus {
-        outline: 2px solid var(--accent-color);
-        box-shadow: 0 0 10px rgba(0, 180, 252, 0.3);
+        text-align: center;
       }
 
       #downloadButton {
@@ -142,24 +136,23 @@
         Briefly
       </h1>
 
-      <button id="summarizeButton">
-        <span class="button-icon">✨</span>
-        Summarize Page
-      </button>
+      <!-- Description about Briefly -->
+      <div id="description">
+        Briefly is your AI-powered assistant that makes browsing and messaging
+        easier. It summarizes web pages in an instant and provides smart reply
+        suggestions for WhatsApp and Telegram. Save time and get things done
+        faster!
+      </div>
 
-      <textarea
-        id="summary"
-        placeholder="Your AI-powered summary will appear here... Sit back and relax!"
-        readonly
-      ></textarea>
-
-      <button id="downloadButton">
-        <span class="button-icon">📄</span>
-        Download Summary
-      </button>
+      <!-- Learn More Button -->
+      <a href="briefly.html" target="_blank">
+        <button id="learnMoreButton">
+          <span class="button-icon">ℹ️</span>
+          Learn More
+        </button>
+      </a>
     </div>
 
-    <script src="jspdf.min.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
