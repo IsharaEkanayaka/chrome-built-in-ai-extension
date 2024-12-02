@@ -50,6 +50,9 @@ const PopupManager = {
   async getSummarizer(content, enableReturn = false) {
     try {
         const canSummarize = await ai.summarizer.capabilities();
+        console.log(canSummarize)
+        console.log(canSummarize.available)
+
         let summarizer;
 
         if (canSummarize && canSummarize.available !== 'no') {
