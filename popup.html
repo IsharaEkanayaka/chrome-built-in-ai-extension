@@ -3,29 +3,162 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Briefly</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>Briefly - AI Web Summarizer</title>
+    <style>
+      :root {
+        --bg-primary: #0a1128;
+        --bg-secondary: #001f3f;
+        --accent-color: #00b4fc;
+        --text-primary: #e6e6e6;
+        --text-secondary: #a0a0a0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        width: 400px;
+        background: linear-gradient(
+          135deg,
+          var(--bg-primary),
+          var(--bg-secondary)
+        );
+        color: var(--text-primary);
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .container {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      h1 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: var(--accent-color);
+        font-size: 24px;
+        text-shadow: 0 0 10px rgba(0, 180, 252, 0.3);
+      }
+
+      .ai-icon img {
+        width: 40px;
+        height: 40px;
+        filter: drop-shadow(0 0 5px var(--accent-color));
+      }
+
+      #summarizeButton,
+      #downloadButton {
+        background: var(--accent-color);
+        color: var(--bg-primary);
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      #summarizeButton:hover,
+      #downloadButton:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .button-icon {
+        font-size: 18px;
+      }
+
+      #summary {
+        width: 100%;
+        min-height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        color: var(--text-primary);
+        padding: 10px;
+        resize: vertical;
+        font-size: 14px;
+        line-height: 1.6;
+        transition: all 0.3s ease;
+      }
+
+      #summary:focus {
+        outline: 2px solid var(--accent-color);
+        box-shadow: 0 0 10px rgba(0, 180, 252, 0.3);
+      }
+
+      #downloadButton {
+        background: rgba(0, 180, 252, 0.2);
+        color: var(--accent-color);
+        display: none;
+        margin-top: 10px;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .loading {
+        animation: pulse 1.5s infinite;
+      }
+
+      @media (prefers-color-scheme: light) {
+        body {
+          background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+          color: #333;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <h1>
-        <div class="ai-icon"><img src="brieflyIcon48.png" alt = "BrandLogo" div>
+        <div class="ai-icon">
+          <img src="brieflyIcon48.png" alt="Briefly AI Logo" />
+        </div>
         Briefly
       </h1>
+
       <button id="summarizeButton">
         <span class="button-icon">✨</span>
         Summarize Page
       </button>
+
       <textarea
         id="summary"
-        placeholder="Your AI summary will materialize here..."
+        placeholder="Your AI-powered summary will appear here... Sit back and relax!"
         readonly
       ></textarea>
-      <button id="downloadButton" style="display: none">
+
+      <button id="downloadButton">
         <span class="button-icon">📄</span>
         Download Summary
       </button>
     </div>
+
     <script src="jspdf.min.js"></script>
     <script src="popup.js"></script>
   </body>

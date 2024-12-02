@@ -171,7 +171,7 @@ const PopupManager = {
         font-size: 14px;
         line-height: 1.5;
         max-width: 400px;
-        max-height: 400px;
+        max-height: 600px;
         overflow: hidden;
         animation: fadeIn 0.3s ease forwards;
       }
@@ -200,7 +200,7 @@ const PopupManager = {
         color: white;  
         animation: gradientBG 15s ease infinite;
         display: -webkit-box;         /* Enables multi-line truncation */
-    -webkit-line-clamp: 3;       /* Number of lines before truncating */
+    -webkit-line-clamp: 8;       /* Number of lines before truncating */
     -webkit-box-orient: vertical; /* Ensure the box behaves like a block */
     overflow: hidden;            /* Hide the overflowing content */
     text-overflow: ellipsis;     /* Add the ellipsis (...) */
