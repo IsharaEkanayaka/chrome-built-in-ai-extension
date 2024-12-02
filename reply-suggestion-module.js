@@ -255,10 +255,18 @@ const ReplySuggestionModule = (() => {
         addSuggestionToPopup(popup, suggestion);
       });
 
-      // Add click outside listener
-      clickOutsideHandler = (event) => handleClickOutside(event, popup);
+      activePopup = popup;
+      // Handle outside clicks
+      const handleOutsideClick = (e) => {
+          if (!popup.contains(e.target)) {
+              popup.remove();
+              activePopup = null;
+              document.removeEventListener('click', handleOutsideClick);
+          }
+      };
+      // Delay to avoid immediate trigger
       setTimeout(() => {
-        document.addEventListener('click', clickOutsideHandler);
+          document.addEventListener('click', handleOutsideClick);
       }, 0);
     } catch (error) {
       console.error('Error generating suggestions:', error);
@@ -277,33 +285,47 @@ const ReplySuggestionModule = (() => {
 
   function attachSuggestionFeature(messageElement) {
     if (messageElement.querySelector('.reply-suggestion-icon')) return;
-
+  
     const suggestionContainer = document.createElement('div');
     suggestionContainer.style.position = 'relative';
     messageElement.appendChild(suggestionContainer);
-
+  
     const icon = createSuggestionIcon();
     suggestionContainer.appendChild(icon);
-
+  
     messageElement.addEventListener('mouseenter', () => {
       icon.style.opacity = '1';
     });
-
+  
     messageElement.addEventListener('mouseleave', () => {
       icon.style.opacity = '0';
     });
-
+  
     icon.addEventListener('click', async (event) => {
       event.stopPropagation();
-
-      const messageText = extractMessages(messageElement.textContent || '');
-
+  
+      // Remove any existing popups
       const existingPopup = document.querySelector('.reply-suggestion-popup');
       if (existingPopup) existingPopup.remove();
-
+  
+      const messageText = extractMessages(messageElement.textContent || '');
+  
       try {
         const popup = await createSuggestionPopup(messageText);
         suggestionContainer.appendChild(popup);
+  
+        // Add click outside listener
+        function handleClickOutside(e) {
+          if (!popup.contains(e.target) && !icon.contains(e.target)) {
+            popup.remove();
+            document.removeEventListener('click', handleClickOutside);
+          }
+        }
+  
+        // Slight delay to prevent immediate closure
+        setTimeout(() => {
+          document.addEventListener('click', handleClickOutside);
+        }, 0);
       } catch (error) {
         console.error('Failed to generate suggestions:', error);
       }
