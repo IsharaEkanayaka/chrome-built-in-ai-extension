@@ -27,11 +27,8 @@ const ReplySuggestionModule = (() => {
     const style = document.createElement('style');
     style.textContent = `
       .reply-suggestion-icon {
-        position: absolute;
-        right: -40px;
-        top: 100%;
-        width: 35px;
-        height: 35px;
+        width: 25px;
+        height: 25px;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -285,13 +282,14 @@ const ReplySuggestionModule = (() => {
 
   function attachSuggestionFeature(messageElement) {
     if (messageElement.querySelector('.reply-suggestion-icon')) return;
-  
+    amjDiv = messageElement.querySelector('._amj_');
     const suggestionContainer = document.createElement('div');
     suggestionContainer.style.position = 'relative';
-    messageElement.appendChild(suggestionContainer);
-  
+    //messageElement.appendChild(suggestionContainer);
+    
     const icon = createSuggestionIcon();
     suggestionContainer.appendChild(icon);
+    amjDiv.appendChild(suggestionContainer);
   
     messageElement.addEventListener('mouseenter', () => {
       icon.style.opacity = '1';
